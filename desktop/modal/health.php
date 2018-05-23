@@ -112,7 +112,7 @@ $eqLogics = MiFlora::byType('MiFlora');
         $label = "warning";
     }
     else {
-        if ($hum > $eqLogic->getConfiguration('HumMin')) {
+        if ($hum >= $eqLogic->getConfiguration('HumMin')) {
             $label = "success";
         } else {
             $label = "danger";
