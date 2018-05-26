@@ -8,7 +8,7 @@ but needs more monitoring and maintenance, mostly demons and dependencies when u
 ### Does this plugin rely on third-party APIs?
 
 > The plugin uses Bluetooth to retrieve information from MiFlora.
-You must install Bluetooth and make sure that `gatttool -b macAddMiFlora --char-read -a 0x35` is running on the target device.
+You need to install Bluetooth and make sure that `gatttool -b macAddMiFlora --char-read -a 0x35` is running on the target device.
 
 ### Does this plugin monopolize Bluetooth?
 
@@ -33,12 +33,12 @@ Warning: in debug mode, data is retrieved continuously regardless of the configu
 
 ### I have a RPI3, I had to disable the internal Bluetooth to not have interference with the Zwave (razberry). Should I always keep the internal Bluetooth off to solve this problem? If not, does any BT USB stick fit the MiFlora and RPI3?
 
-> Dans ce cas il faut prendre un dongle BLE. Le problème avec le razberry c'est seulement si on utilise le contrôleur interne.
+> In this case you must take a BLE dongle. The problem with the razberry is only if you use the internal controller.
 
 
 ### I wish to contribute to the improvement of this plugin, is it possible?
 
-> Bien sur, le code est sur GitHub : rjullien/plugin-MiFlora, vous pouvez soumettre des pull requests.
+> Of course, the code is on GitHub: rjullien / plugin-MiFlora, you can submit pull requests.
 
 ### gatttool is unstable and hangs on RPI
 
@@ -53,6 +53,7 @@ BlueZ is incompatible with blueman (sudo apt-get remove blueman)
 
 > Alerts can be given by text to speech (plugin playTTS for example), by notification on smartphone (pushbullet plugin), by SMS ...
 
-> Thresholds can be found using Xiaomi or Parrot database or a threshold between 14 and 16 seems to be suitable for a majority of houseplants.
+> Thresholds can be found using Xiaomi's herbal or Parrot's or a threshold between 14 and 16 seems suitable for a majority of houseplants.
 
-> It is also possible to regulate an automatic watering, MiFlora seems to be resistant to bad weather
+> It is also possible to regulate an automatic watering, MiFlora seems to withstand bad weather
+

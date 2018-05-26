@@ -46,9 +46,10 @@ function MiFlora_update() {
             $remoteA->setConfiguration('remotePassword',config::byKey('password', 'MiFlora'));
             $remoteA->setConfiguration('remoteDevice',config::byKey('adapter', 'MiFlora'));
             $remoteA->save();
-
-            // log::add('MiFlora', 'info', 'config - remote not created '. serialize($remoteA));
-
+            //supprime pour eviter creer a chaque fois
+            // TODO Sep18 Activer la ligne suivante des que le fallback a la version sans antenne peut etre supprime
+            //     config::save('maitreesclave', 'local' ,'MiFlora');
+            log::add('MiFlora', 'debug', 'config - remote  created fin ');
             $antenneAncienneMethode = "deporte";
         } else {
             log::add('MiFlora', 'info', 'config - antenna exist');
@@ -61,13 +62,33 @@ function MiFlora_update() {
     }
 
     # TODO - after Beta - Sept 18
-    # Effacer maitreesclave, addressip, portssh, user, password
+    # Effacer maitreesclave
+    //pour nouveau mode avec des antennes
+
+    // Activer les lignes suivantes des que le fallback a la version sans antenne peut etre supprime
+
+    /*   if (config::byKey('user', 'MiFlora') != ""){
+           config::remove('user', 'MiFlora') ;
+       }
+       if (config::byKey('password', 'MiFlora') != ""){
+           config::remove('password', 'MiFlora') ;
+       }
+       if (config::byKey('portssh', 'MiFlora') != ""){
+           config::remove('portssh', 'MiFlora') ;
+       }
+       if (config::byKey('addressip', 'MiFlora') != ""){
+           config::remove('addressip', 'MiFlora') ;
+       }*/
+
 
     if (config::byKey('frequence', 'MiFlora') == ""){
         config::save('frequence', '1', 'MiFlora');
     }
     if (config::byKey('maitreesclave', 'MiFlora') == "") {
-        config::save('maitreesclave', 'local' ,'MiFlora');
+        // TODO SEP18 - remplacer le if precedent par la ligne en commentaire
+        //if (config::byKey('maitreesclave', 'MiFlora') != "local") {
+            config::save('maitreesclave', 'local' ,'MiFlora');
+        }
     }
     if (config::byKey('adapter', 'MiFlora') == "") {
         config::save('adapter', 'hci0', 'MiFlora');
@@ -100,13 +121,18 @@ function MiFlora_update() {
             log::add('MiFlora', 'info', '$antenneItem-Install: '.$eqLogic->getHumanName(false, false) . ' : ' .$antenne);
         }
 
-        if ($eqLogic->getConfiguration('battery_danger_threshold') == "") {
-            $eqLogic->setConfiguration('battery_danger_threshold', '10');
-            log::add('MiFlora', 'info', 'battery_danger_threshold-Install: 10');
+
+        if (config::byKey('battery::danger', 'core') == '') { // Prio a la config globale
+            if ($eqLogic->getConfiguration('battery_danger_threshold') == "") {
+                $eqLogic->setConfiguration('battery_danger_threshold', '10');
+                log::add('MiFlora', 'info', 'battery_danger_threshold-Install: 10');
+            }
         }
-        if ($eqLogic->getConfiguration('battery_warning_threshold') == "") {
-            $eqLogic->setConfiguration('battery_warning_threshold', '15');
-            log::add('MiFlora', 'info', 'battery_warning_threshold-Install: 15');
+        if(config::byKey('battery::warning', 'core') == '') {
+            if ($eqLogic->getConfiguration('battery_warning_threshold') == "") {
+                $eqLogic->setConfiguration('battery_warning_threshold', '15');
+                log::add('MiFlora', 'info', 'battery_warning_threshold-Install: 15');
+            }
         }
         if ($eqLogic->getConfiguration('devicetype') == "") {
             $eqLogic->setConfiguration('devicetype', 'MiFlora');
