@@ -32,6 +32,22 @@ if (!isConnect()) {
 	</span>
         <div class="form-group"> <br>
 
+            <label class="col-lg-4 control-label">{{frequence de Scan des antennes auto}}</label>
+            <div class="col-lg-2">
+                <select id="frequence" class="configKey form-control"  data-l1key="freqScan" >
+                    <option value="0">{{aucune}}</option>
+                    <option value="1">{{1h}}</option>
+                    <option value="2">{{2h}}</option>
+                    <option value="4">{{4h}}</option>
+                    <option value="6">{{6h}}</option>
+                    <option value="8">{{8h}}</option>
+                    <option value="12">{{12h}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group"> <br>
+
           <label class="col-lg-4 control-label">{{frequence de recuperation des données}}</label>
           <div class="col-lg-2">
               <select id="frequence" class="configKey form-control"  data-l1key="frequence" >
