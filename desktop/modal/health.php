@@ -30,6 +30,7 @@ $eqLogics = MiFlora::byType('MiFlora');
 			<th>{{Image}}</th>
 			<th>{{Module}}</th>
 			<th>{{ID}}</th>
+            <th>{{Model}}</th>
 			<th>{{Mac}}</th>
             <th>{{Fréquence (mn)}}</th>
 			<th>{{Statut}}</th>
@@ -37,6 +38,7 @@ $eqLogics = MiFlora::byType('MiFlora');
             <th>{{Antenne  }}</th>
             <th>{{Antenne réelle}}</th>
             <th>{{HumMin}}</th>
+            <th>{{Hum}}</th>
 			<th>{{Dernière communication}}</th>
 		</tr>
 	</thead>
@@ -46,10 +48,12 @@ $eqLogics = MiFlora::byType('MiFlora');
 	$opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
 	$alternateImg = $eqLogic->getConfiguration('iconModel');
 	$img = '<img class="lazy" src="plugins/MiFlora/plugin_info/MiFlora_icon.png" height="55" width="55" style="' . $opacity . '"/>';
-
+	
 	echo '<tr><td>' . $img . '</td><td><a href="' . $eqLogic->getLinkToConfiguration() . '" style="text-decoration: none;">' . $eqLogic->getHumanName(true) . '</a></td>';
 
  	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
+
+    echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('devicetype') . '</span></td>';
 
 	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getConfiguration('macAdd') . '</span></td>';
 
@@ -104,24 +108,16 @@ $eqLogics = MiFlora::byType('MiFlora');
     }
 
 
-    $cmd = $eqLogic->getCmd(null, 'moisture');
-    $hum= $cmd->execCmd();
-    log::add('MiFlora','debug','health hum commande ' .$cmd->getHumanName() ."hum ".$hum) ;
+      $cmd = $eqLogic->getCmd(null, 'moisture');
+      $hum= $cmd->execCmd();
+      log::add('MiFlora','debug','health hum commande ' .$cmd->getHumanName() ."hum ".$hum) ;
 
-    if($eqLogic->getStatus('OK') != 1  ) {
-        $label = "warning";
+    if ($hum >= $eqLogic->getConfiguration('HumMin') ){
+        echo '<td><span class="label label-success" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('HumMin') . '</span></td>';
+    }else{
+        echo '<td><span class="label label-danger" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('HumMin') . '</span></td>';
     }
-    else {
-        if ($hum >= $eqLogic->getConfiguration('HumMin')) {
-            $label = "success";
-        } else {
-            $label = "danger";
-        }
-    }
-    echo '<td><span class="label label-'.$label.'" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('HumMin')  . '</span>';
-    echo     '<span class="label label-'.$label. '" style="font-size : 0.7em;cursor:default;">' . $hum . '</span></td>';
-
-
+    echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $hum . '</span></td>';
     echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
 
 
