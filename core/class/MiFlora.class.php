@@ -398,8 +398,8 @@ class MiFlora extends eqLogic
         if ($MiFloraData == '') {
             $mi_flora->setStatus('OK', 0);
   //          $mi_flora->updateJeedom($macAdd, 0, 0, 0, 0);
-            log::add('MiFlora', 'error', 'mi flora data is empty, retried ' . $tryGetData . ' times, stop pour ' . $mi_flora->getHumanName(false, false));
-            message::add('MiFlora', 'mi flora data is empty for ' . $mi_flora->getHumanName(false, false) . ' check module');
+            log::add('MiFlora', 'warning', 'mi flora data is empty, retried ' . $tryGetData . ' times, stop pour ' . $mi_flora->getHumanName(false, false));
+            // message::add('MiFlora', 'mi flora data is empty for ' . $mi_flora->getHumanName(false, false) . ' check module');
 
         } else {
             $mi_flora->setStatus('OK', 1);
@@ -803,7 +803,7 @@ class MiFlora extends eqLogic
             $MiFloraData = exec($command);
             log::add('MiFlora', 'debug', 'MiFloraData: ' . $MiFloraData);
             if (strpos($MiFloraData, 'read failed') !== false or strpos($MiFloraData, 'connect') !== false) {
-                log::add('MiFlora', 'error', 'erreur: gatttool ne fonctionne pas - ' . $MiFloraData);
+                log::add('MiFlora', 'warning', 'erreur: gatttool ne fonctionne pas - ' . $MiFloraData);
                 $MiFloraData = '';
             }
         }
@@ -928,7 +928,7 @@ class MiFlora extends eqLogic
                 }
                 log::add('MiFlora', 'debug', 'MiFloraBatteryAndFirmwareVersion: ' . $MiFloraBatteryAndFirmwareVersion);
                 if (strpos($MiFloraBatteryAndFirmwareVersion, 'read failed') !== false or strpos($MiFloraBatteryAndFirmwareVersion, 'connect') !== false) {
-                    log::add('MiFlora', 'error', 'erreur: gatttool ne fonctionne pas - ' . $MiFloraBatteryAndFirmwareVersion);
+                    log::add('MiFlora', 'warning', 'erreur: gatttool ne fonctionne pas - ' . $MiFloraBatteryAndFirmwareVersion);
                     $MiFloraBatteryAndFirmwareVersion = '';
                 }
                 $command = 'gatttool --adapter=' . $adapter . ' -b ' . $macAdd . '  --char-read -a 0x03 --sec-level=' . $seclvl . '  2>&1 ';
@@ -936,7 +936,7 @@ class MiFlora extends eqLogic
                 $MiFloraName = exec($command);
                 log::add('MiFlora', 'debug', 'MiFloraName: ' . $MiFloraName);
                 if (strpos($MiFloraName, 'read failed') !== false or strpos($MiFloraName, 'connect') !== false) {
-                    log::add('MiFlora', 'error', 'erreur: gatttool ne fonctionne pas - ' . $MiFloraName);
+                    log::add('MiFlora', 'warning', 'erreur: gatttool ne fonctionne pas - ' . $MiFloraName);
                     $MiFloraName = '';
                 }
             } else {
@@ -1053,7 +1053,7 @@ class MiFlora extends eqLogic
     {
         // store into Jeedom DB
         if ($temperature == 0 && $moisture == 0 && $fertility == 0 && $lux == 0) {
-            log::add('MiFlora', 'error', 'Toutes les mesures a 0 pour ' . $macAdd . ', erreur de connection Mi Flora');
+            log::add('MiFlora', 'warning', 'Toutes les mesures a 0 pour ' . $macAdd . ', erreur de connection Mi Flora');
             $cmd = $this->getCmd(null, 'OK');
             if (is_object($cmd)) {
                 $cmd->event(0);
