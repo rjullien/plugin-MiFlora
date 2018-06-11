@@ -113,6 +113,9 @@ function MiFlora_update() {
         $real_antenne = $eqLogic->getConfiguration('real_antenna');
         if ($antenne == "") {
             $antenne = $antenneAncienneMethode;
+            if ($antenne == "") {
+                $antenne = "local";
+            }
             $eqLogic->setConfiguration('antenna', $antenne); //default value in config::
             log::add('MiFlora', 'info', '$antenneItem-Install: '.$eqLogic->getHumanName(false, false) . ' : ' .$antenne);
         }
