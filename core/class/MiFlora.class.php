@@ -862,7 +862,7 @@ class MiFlora extends eqLogic
                         $MiFloraBatteryAndFirmwareVersion = stream_get_contents($gattresult);
                         log::add('MiFlora', 'debug', 'MiFloraBatteryAndFirmwareVersion:' . $MiFloraBatteryAndFirmwareVersion);
                         if ($MiFloraBatteryAndFirmwareVersion=="connect error: Connection refused (111)" || $MiFloraBatteryAndFirmwareVersion == '') {
-                            log::add('MiFlora', 'error', 'connect error: Connection refused (111) - MiFlora refuse la connection'.$mi_flora->getHumanName(false, false));
+                            log::add('MiFlora', 'warning', 'connect error: Connection refused (111) - MiFlora refuse la connection'.$mi_flora->getHumanName(false, false));
                         }
                         // get MiFlora Name
                         //gatttool -b C4:7C:8D:61:BB:9A --char-read -a 0x03'
@@ -924,7 +924,7 @@ class MiFlora extends eqLogic
                 log::add('MiFlora', 'debug', 'get firmware - cmd:'.$command);
                 $MiFloraBatteryAndFirmwareVersion = exec($command);
                 if ($MiFloraBatteryAndFirmwareVersion=="connect error: Connection refused (111)") {
-                    log::add('MiFlora', 'error', 'connect error: Connection refused (111) - MiFlora refuse la connection'.$mi_flora->getHumanName(false, false));
+                    log::add('MiFlora', 'warning', 'connect error: Connection refused (111) - MiFlora refuse la connection'.$mi_flora->getHumanName(false, false));
                 }
                 log::add('MiFlora', 'debug', 'MiFloraBatteryAndFirmwareVersion: ' . $MiFloraBatteryAndFirmwareVersion);
                 if (strpos($MiFloraBatteryAndFirmwareVersion, 'read failed') !== false or strpos($MiFloraBatteryAndFirmwareVersion, 'connect') !== false) {
