@@ -88,7 +88,6 @@ function MiFlora_update() {
         // TODO SEP18 - remplacer le if precedent par la ligne en commentaire
         //if (config::byKey('maitreesclave', 'MiFlora') != "local") {
             config::save('maitreesclave', 'local' ,'MiFlora');
-        }
     }
     if (config::byKey('adapter', 'MiFlora') == "") {
         config::save('adapter', 'hci0', 'MiFlora');
@@ -106,7 +105,7 @@ function MiFlora_update() {
         if ($frequenceItem == "") {
             $frequenceItem = 0;
             $eqLogic->setConfiguration('frequence', $frequenceItem); //default value in config::
-            log::add('MiFlora', 'info', 'frequenceItem-Install: '.$eqLogic->getHumanName(false, false) . ' : ' . $frequenceItem);
+            log::add('MiFlora', 'info', 'frequenceItem-Install: ' . $eqLogic->getHumanName(false, false) . ' : ' . $frequenceItem);
         }
 
         $antenne = $eqLogic->getConfiguration('antenna');
@@ -117,11 +116,11 @@ function MiFlora_update() {
                 $antenne = "local";
             }
             $eqLogic->setConfiguration('antenna', $antenne); //default value in config::
-            log::add('MiFlora', 'info', '$antenneItem-Install: '.$eqLogic->getHumanName(false, false) . ' : ' .$antenne);
+            log::add('MiFlora', 'info', '$antenneItem-Install: ' . $eqLogic->getHumanName(false, false) . ' : ' . $antenne);
         }
         if ($real_antenne == "") {
             $eqLogic->setConfiguration('real_antenna', 'local'); //default value in config::
-            log::add('MiFlora', 'info', '$antenneItem-Install: '.$eqLogic->getHumanName(false, false) . ' : ' .$antenne);
+            log::add('MiFlora', 'info', '$antenneItem-Install: ' . $eqLogic->getHumanName(false, false) . ' : ' . $antenne);
         }
 
 
@@ -131,7 +130,7 @@ function MiFlora_update() {
                 log::add('MiFlora', 'info', 'battery_danger_threshold-Install: 10');
             }
         }
-        if(config::byKey('battery::warning', 'core') == '') {
+        if (config::byKey('battery::warning', 'core') == '') {
             if ($eqLogic->getConfiguration('battery_warning_threshold') == "") {
                 $eqLogic->setConfiguration('battery_warning_threshold', '15');
                 log::add('MiFlora', 'info', 'battery_warning_threshold-Install: 15');
@@ -139,7 +138,7 @@ function MiFlora_update() {
         }
         if ($eqLogic->getConfiguration('devicetype') == "") {
             $eqLogic->setConfiguration('devicetype', 'MiFlora');
-            log::add('MiFlora', 'info','set device type to MiFlora');
+            log::add('MiFlora', 'info', 'set device type to MiFlora');
         }
 
         ## Cree la commande refresh pour les objets existants
@@ -157,7 +156,6 @@ function MiFlora_update() {
         }
 
         $eqLogic->save();
-
     }
 
 }
